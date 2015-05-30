@@ -1,5 +1,6 @@
 # Jenkins + Pivotal Release Notes
 
+Generates release notes from Pivotal Tracker
 
 ## Installation
 
