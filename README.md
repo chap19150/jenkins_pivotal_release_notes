@@ -1,4 +1,4 @@
-# Jenkins Pivotal Release Notes
+# Jenkins + Pivotal Release Notes
 
 
 ## Installation
@@ -19,13 +19,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+In Jenkins, add a post build step like:
 
-## Development
+```
+jenkins_pivotal --token a1b2c3 --project 1234 --date 05/01/2015 --file /Users/username/release_notes.txt
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+Help output is as follows.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```
+Usage: bin/jenkins_pivotal_release_notes [options...]
+    -t, --token        Tracker API token.
+    -p, --project      Tracker Project ID.
+    -d, --date         Story fetch date
+    -f, --file         Saved file path
+    -v, --version      Display version information.
+    -h, --help         Display this help message.
+```
 
 ## Contributing
 
