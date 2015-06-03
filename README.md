@@ -24,6 +24,9 @@ In Jenkins, add a post build step like:
 
 ```
 jenkins_pivotal --token a1b2c3 --project 1234 --date 05/01/2015 --file /Users/username/release_notes.txt
+
+The date parameter is optional. If the date is not present the date is taken from
+the first line of the file. If the file is not present it gets all stories.
 ```
 
 Help output is as follows.

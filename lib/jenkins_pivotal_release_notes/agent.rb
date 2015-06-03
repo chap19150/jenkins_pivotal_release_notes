@@ -12,12 +12,23 @@ module JenkinsPivotalReleaseNotes
     end
 
     def run!
-      puts date
-      puts file
+      tempDate = date
+      if tempDate.nil? || tempDate.empty?
+        # It's nil or empty so read date from file
+        begin
+          tempDate = File.open(file, &:readline)
+        rescue
+          #put some old date
+          tempDate = "11/11/1976"
+        end
+      end
+      puts tempDate
+
       output = ""
+      output.concat(Time.now.strftime("%m/%d/%Y") + "\n")
       client = TrackerApi::Client.new(token: token)
       currentProject  = client.project(project)
-      featureStories = currentProject.stories(filter: 'accepted_since:' + date  + ' type:Feature')
+      featureStories = currentProject.stories(filter: 'accepted_since:' + tempDate  + ' type:Feature')
       inProgressStories = currentProject.stories(filter: 'state:started state:finished state:delivered type:Feature')
       bugStories = currentProject.stories(filter: '-state:delivered -state:accepted type:Bug')
       output.concat(currentProject.name + " Release Notes\n\n")
@@ -30,15 +41,16 @@ module JenkinsPivotalReleaseNotes
       end
 
       if inProgressStories.size > 0
+        output.concat("\n")
         output.concat("IN PROGRESS FEATURES\n")
         output.concat("====================\n")
         for story in inProgressStories
           output.concat(story.name + "\n")
         end
-        output.concat("\n")
       end
 
       if bugStories.size > 0
+        output.concat("\n")
         output.concat("KNOWN BUGS\n")
         output.concat("==========\n")
         for story in bugStories
